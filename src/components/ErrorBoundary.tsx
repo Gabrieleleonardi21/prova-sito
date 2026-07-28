@@ -1,4 +1,5 @@
 import { Component, type ReactNode } from "react";
+import { withBase } from "@/lib/base";
 
 type Props = { children: ReactNode };
 type State = { error: Error | null };
@@ -37,7 +38,7 @@ export class ErrorBoundary extends Component<Props, State> {
                 Riprova
               </button>
               <a
-                href="/"
+                href={withBase("/")}
                 className="btn btn-outline-line"
                 style={{ padding: "0.85rem 1.5rem", fontSize: "0.72rem" }}
               >

@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { Facebook, Instagram } from "lucide-react";
 import { BUSINESS, STORES } from "@/lib/site-content";
+import { withBase } from "@/lib/base";
 
 // Pagine legali del sito, linkate nella riga finale del footer.
 const LEGAL_LINKS = [
@@ -79,7 +80,7 @@ export function SiteFooter() {
               <ul className="list-unstyled d-grid gap-2 mt-4 mb-0 small">
                 {column.links.map((link) => (
                   <li key={link.label}>
-                    <a href={link.href}>{link.label}</a>
+                    <a href={withBase(link.href)}>{link.label}</a>
                   </li>
                 ))}
               </ul>

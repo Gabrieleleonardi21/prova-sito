@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { Check, Gift, RotateCcw, ShieldCheck, Truck } from "lucide-react";
+import { withBase } from "@/lib/base";
 import { CATEGORIES, PRODUCTS, isAvailable } from "@/lib/shop-content";
 import { useCart } from "@/lib/cart";
 import { formatEuro } from "@/lib/format";
@@ -110,7 +111,7 @@ export function ProductPage() {
                   Pezzo unico disponibile solo in boutique: scriveteci per verificarne la
                   disponibilità o fissare un appuntamento.
                 </p>
-                <a href="/#contatti" className="btn btn-gold w-100 w-sm-auto">
+                <a href={withBase("/#contatti")} className="btn btn-gold w-100 w-sm-auto">
                   Verifica disponibilità
                 </a>
               </div>

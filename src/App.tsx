@@ -49,10 +49,13 @@ function PageLoader() {
   );
 }
 
+// Base path del router: "" in locale/dominio proprio, "/<repo>" su GitHub Pages.
+const basename = import.meta.env.BASE_URL.replace(/\/$/, "");
+
 // Router dell'app: header e footer comuni, pagine al centro.
 export function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={basename}>
       <CartProvider>
         <ScrollToTop />
         {/* Per chi naviga da tastiera: salta la navigazione e va al contenuto */}

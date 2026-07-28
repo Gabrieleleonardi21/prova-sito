@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, ShoppingBag, X } from "lucide-react";
 import { BUSINESS, NAV_LINKS } from "@/lib/site-content";
+import { withBase } from "@/lib/base";
 import { useCart } from "@/lib/cart";
 import { prefetch } from "@/lib/prefetch";
 
@@ -53,7 +54,7 @@ export function SiteHeader() {
 
         <nav aria-label="Navigazione principale" className="d-none d-lg-flex align-items-center gap-4">
           {NAV_LINKS.map((link) => (
-            <a key={link.href} href={link.href} className="header-link">
+            <a key={link.href} href={withBase(link.href)} className="header-link">
               {link.label}
             </a>
           ))}
@@ -76,7 +77,7 @@ export function SiteHeader() {
             {cartBadge}
           </Link>
           <a
-            href="/#contatti"
+            href={withBase("/#contatti")}
             className="btn btn-outline-ivory"
             style={{ padding: "0.7rem 1.4rem", fontSize: "0.72rem" }}
           >
@@ -113,7 +114,7 @@ export function SiteHeader() {
               {NAV_LINKS.map((link) => (
                 <li key={link.href}>
                   <a
-                    href={link.href}
+                    href={withBase(link.href)}
                     onClick={() => setOpen(false)}
                     className="header-link d-block"
                     style={{ fontSize: "0.9rem", letterSpacing: "0.18em" }}
@@ -144,7 +145,7 @@ export function SiteHeader() {
               </li>
               <li>
                 <a
-                  href="/#contatti"
+                  href={withBase("/#contatti")}
                   onClick={() => setOpen(false)}
                   className="btn btn-outline-ivory"
                   style={{ padding: "0.7rem 1.4rem", fontSize: "0.72rem" }}

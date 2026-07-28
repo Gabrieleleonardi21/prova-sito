@@ -133,6 +133,18 @@ for (const page of pages) {
   await writeFile(path.join(outDir, "index.html"), html);
 }
 
+// Fallback per host statici senza rewrite (es. GitHub Pages): i percorsi
+// sconosciuti servono 404.html, che carica la SPA e mostra la pagina 404.
+await writeFile(
+  path.join(DIST, "404.html"),
+  renderPage(template, {
+    path: "/404",
+    title: "Pagina non trovata — Gioielleria Saltini",
+    description: "La pagina che cercate non esiste o è stata spostata.",
+    noindex: true,
+  }),
+);
+
 // Sitemap: solo le pagine indicizzabili.
 const sitemapUrls = pages
   .filter((page) => !page.noindex)

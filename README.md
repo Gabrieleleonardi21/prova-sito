@@ -128,6 +128,13 @@ Nota per il deploy: essendo una SPA con router, il server deve servire
 serve un redirect `/* → /index.html 200`, su Vercel una rewrite equivalente;
 `npm run preview` lo fa già da solo.
 
+**GitHub Pages**: il deploy è automatico a ogni push su `main`
+(`.github/workflows/pages.yml`). La build riceve `VITE_BASE=/<repo>/` perché
+i Pages di progetto vivono in una sottocartella; le rotte note hanno il loro
+HTML statico e i percorsi sconosciuti passano da `404.html` (fallback SPA).
+Quando si aggancerà il dominio proprio, togliere `VITE_BASE` dal workflow.
+Nota: su Pages non girano le function `api/` — per Stripe serve Vercel/Netlify.
+
 ## SEO, privacy e legale
 
 - **SEO**: `npm run build` genera un HTML statico per ogni rotta (meta e
