@@ -1,0 +1,18 @@
+# Dipendenze e build
+node_modules/
+dist/
+
+# Output dei test Playwright
+test-results/
+playwright-report/
+
+# Variabili d'ambiente locali (contengono endpoint/chiavi: non vanno committate)
+.env
+.env.local
+*.local
+
+# Sistema operativo / editor
+.DS_Store
+.idea/
+.vscode/*
+!.vscode/extensions.json

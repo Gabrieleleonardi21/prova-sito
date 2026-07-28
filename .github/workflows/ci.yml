@@ -1,0 +1,25 @@
+# CI: a ogni push o pull request esegue lint, build (con generazione SEO)
+# e i test end-to-end del flusso di acquisto.
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # Node 24: lo script SEO importa i .ts del progetto via type stripping
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run build
+      # I test usano il Chrome preinstallato sul runner (channel "chrome")
+      - run: npm run test:e2e

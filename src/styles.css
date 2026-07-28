@@ -1,0 +1,787 @@
+/* ═══════════════════════════════════════════════════════════════════
+   Gioielleria Saltini — design system su Bootstrap 5.3, solo CSS
+
+   Bootstrap è importato precompilato in main.tsx PRIMA di questo file:
+   qui lo personalizziamo sovrascrivendo le sue custom properties (--bs-*)
+   e definiamo il layer di classi semantiche usate dai componenti.
+   Gli override vincono perché, a parità di specificità, questo foglio
+   viene caricato dopo bootstrap.min.css.
+
+   I font (Cormorant Garamond, Jost) sono caricati via <link> in index.html.
+
+   Breakpoint Bootstrap usati qui: sm 576px · md 768px · lg 992px
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* ── 1. Brand + override delle variabili Bootstrap ────────────────── */
+:root {
+  /* Palette Saltini */
+  --saltini-ivory: #f7f3ec;
+  --saltini-sand: #efe9de;
+  --saltini-ink: #1a1714;
+  --saltini-gold: #c6a15b;
+  --saltini-gold-soft: #dcc08a;
+  --saltini-tortora: #857f73;
+  --saltini-line: #ded6c8;
+  --saltini-paper: #fffdf9; /* fondo di pannelli e card */
+
+  --font-display: "Cormorant Garamond", "Playfair Display", Georgia, serif;
+  --font-body: "Jost", "Inter", system-ui, -apple-system, sans-serif;
+
+  /* Override Bootstrap: corpo del testo, bordi, link */
+  --bs-body-bg: var(--saltini-ivory);
+  --bs-body-color: #241f19;
+  --bs-secondary-color: var(--saltini-tortora);
+  --bs-body-font-family: var(--font-body);
+  --bs-body-font-weight: 300;
+  --bs-body-line-height: 1.65;
+  --bs-border-color: var(--saltini-line);
+  --bs-border-radius: 2px;
+  --bs-border-radius-sm: 2px;
+  --bs-border-radius-lg: 2px;
+  --bs-link-color-rgb: 26, 23, 20; /* ink */
+  --bs-link-hover-color-rgb: 198, 161, 91; /* oro */
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem; /* compensa l'header fisso sugli anchor */
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Il CSS compilato di Bootstrap sottolinea i link: qui non li vogliamo */
+a {
+  text-decoration: none;
+}
+
+/* Titoli in serif leggero: Bootstrap non espone variabili per questi valori */
+h1, h2, h3, h4, h5, h6,
+.display-1, .display-2, .display-3, .display-4, .display-5, .display-6 {
+  font-family: var(--font-display);
+  font-weight: 300;
+  line-height: 1.1;
+}
+
+::selection {
+  background: var(--saltini-gold-soft);
+  color: var(--saltini-ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--saltini-gold);
+  outline-offset: 3px;
+}
+
+/* Bottoni: dimensioni base comuni a tutte le varianti (via variabili .btn) */
+.btn {
+  --bs-btn-padding-y: 0.95rem;
+  --bs-btn-padding-x: 2.25rem;
+  --bs-btn-font-size: 0.75rem;
+  --bs-btn-font-weight: 500;
+  --bs-btn-border-radius: 0;
+}
+
+/* Campi del form: qui Bootstrap compila valori fissi, servono regole dirette */
+.form-control,
+.form-select {
+  background-color: #fff;
+  border-color: #d8cfbf;
+  padding: 0.8rem 1rem;
+}
+
+.form-select {
+  padding-right: 3rem; /* spazio per la freccia del select */
+}
+
+.form-control:focus,
+.form-select:focus {
+  border-color: var(--saltini-gold);
+  box-shadow: none;
+}
+
+.form-check-input:checked {
+  background-color: var(--saltini-gold);
+  border-color: var(--saltini-gold);
+}
+
+/* ── 2. Tipografia ────────────────────────────────────────────────── */
+.eyebrow {
+  font-family: var(--font-body);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--saltini-gold);
+  margin-bottom: 0;
+}
+
+.display-serif {
+  font-family: var(--font-display);
+}
+
+.wordmark {
+  font-family: var(--font-display);
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+.text-gold {
+  color: var(--saltini-gold) !important;
+}
+
+.text-soft {
+  color: var(--saltini-tortora);
+}
+
+.text-on-ink {
+  color: rgba(247, 243, 236, 0.72); /* avorio attenuato, per testo su fondo scuro */
+}
+
+/* ── 3. Superfici ─────────────────────────────────────────────────── */
+.section {
+  padding-block: 5rem;
+}
+
+@media (min-width: 768px) {
+  .section {
+    padding-block: 7.5rem;
+  }
+}
+
+.bg-ink {
+  background-color: var(--saltini-ink);
+  color: var(--saltini-ivory);
+}
+
+.bg-ink h1,
+.bg-ink h2,
+.bg-ink h3 {
+  color: var(--saltini-ivory);
+}
+
+.bg-sand {
+  background-color: var(--saltini-sand);
+}
+
+.gold-rule {
+  display: block;
+  width: 3.5rem;
+  height: 1px;
+  background: linear-gradient(90deg, var(--saltini-gold) 0%, rgba(198, 161, 91, 0.15) 100%);
+}
+
+.panel {
+  border: 1px solid var(--saltini-line);
+  background: var(--saltini-paper);
+}
+
+/* ── 4. Bottoni ───────────────────────────────────────────────────── */
+.btn-gold {
+  background-color: var(--saltini-gold);
+  color: var(--saltini-ink);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  border: 1px solid var(--saltini-gold);
+  transition: background-color 0.3s ease;
+}
+
+.btn-gold:hover,
+.btn-gold:focus-visible {
+  background-color: var(--saltini-gold-soft);
+  border-color: var(--saltini-gold-soft);
+  color: var(--saltini-ink);
+}
+
+.btn-gold:disabled {
+  opacity: 0.6;
+}
+
+.btn-outline-ivory {
+  background: transparent;
+  color: var(--saltini-ivory);
+  border: 1px solid rgba(247, 243, 236, 0.4);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  transition:
+    border-color 0.3s ease,
+    color 0.3s ease;
+}
+
+.btn-outline-ivory:hover,
+.btn-outline-ivory:focus-visible {
+  border-color: var(--saltini-gold);
+  color: var(--saltini-gold);
+}
+
+.btn-outline-line {
+  background: transparent;
+  color: inherit;
+  border: 1px solid #d8cfbf;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  transition:
+    border-color 0.3s ease,
+    color 0.3s ease;
+}
+
+.btn-outline-line:hover,
+.btn-outline-line:focus-visible {
+  border-color: var(--saltini-gold);
+  color: var(--saltini-gold);
+}
+
+/* ── 5. Header ────────────────────────────────────────────────────── */
+.site-header {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 1030;
+  padding-block: 1.5rem;
+  background: transparent;
+  transition:
+    background-color 0.5s ease,
+    padding 0.5s ease,
+    box-shadow 0.5s ease;
+}
+
+.site-header.is-scrolled {
+  padding-block: 0.75rem;
+  background-color: rgba(26, 23, 20, 0.95);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.28);
+}
+
+.site-header .wordmark {
+  color: var(--saltini-ivory);
+  font-size: 1.5rem;
+}
+
+.header-link {
+  font-size: 0.8rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(247, 243, 236, 0.75);
+  transition: color 0.3s ease;
+}
+
+.header-link:hover,
+.header-link:focus-visible {
+  color: var(--saltini-gold);
+}
+
+.header-toggle {
+  background: none;
+  border: 0;
+  color: var(--saltini-ivory);
+  padding: 0.25rem;
+  line-height: 1;
+}
+
+.header-drawer {
+  margin-top: 1rem;
+  border-top: 1px solid rgba(247, 243, 236, 0.12);
+  background-color: rgba(26, 23, 20, 0.98);
+  backdrop-filter: blur(10px);
+  padding: 1.5rem 0;
+}
+
+/* ── 6. Hero ──────────────────────────────────────────────────────── */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+.hero__media {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(26, 23, 20, 0.85),
+    rgba(26, 23, 20, 0.7) 45%,
+    rgba(26, 23, 20, 0.95)
+  );
+}
+
+.hero__body {
+  position: relative;
+  padding-block: 8rem 7rem;
+}
+
+.hero__wordmark {
+  font-size: 3.25rem;
+  letter-spacing: 0.42em;
+}
+
+.hero__title {
+  font-size: 2.5rem;
+}
+
+@media (min-width: 576px) {
+  .hero__wordmark {
+    font-size: 4.5rem;
+  }
+
+  .hero__title {
+    font-size: 3.75rem;
+  }
+}
+
+.rating-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  border: 1px solid rgba(247, 243, 236, 0.18);
+  background: rgba(26, 23, 20, 0.4);
+  backdrop-filter: blur(6px);
+  padding: 0.75rem 1.25rem;
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(247, 243, 236, 0.85);
+}
+
+/* ── 7. Collezioni ────────────────────────────────────────────────── */
+.collection-card {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  aspect-ratio: 3 / 2;
+}
+
+.collection-card__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.collection-card__veil {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(26, 23, 20, 0.9), rgba(26, 23, 20, 0.2) 55%, transparent);
+  transition: background 0.5s ease;
+}
+
+.collection-card__body {
+  position: absolute;
+  inset: auto 0 0 0;
+  padding: 1.75rem;
+  color: var(--saltini-ivory);
+}
+
+.collection-card__cta {
+  font-size: 0.68rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--saltini-gold);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.collection-card:hover .collection-card__img,
+.collection-card:focus-visible .collection-card__img {
+  transform: scale(1.06);
+}
+
+.collection-card:hover .collection-card__cta,
+.collection-card:focus-visible .collection-card__cta {
+  opacity: 1;
+}
+
+.zoom-frame {
+  overflow: hidden;
+}
+
+.zoom-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.zoom-frame:hover img {
+  transform: scale(1.06);
+}
+
+/* ── 8. Timeline ──────────────────────────────────────────────────── */
+.timeline-item {
+  position: relative;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--saltini-line);
+  list-style: none;
+}
+
+.timeline-item::before {
+  content: "";
+  position: absolute;
+  top: -4px;
+  left: 0;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--saltini-gold);
+}
+
+/* ── 9. Marchi (marquee) ──────────────────────────────────────────── */
+.marquee {
+  position: relative;
+  overflow: hidden;
+}
+
+.marquee__track {
+  display: flex;
+  width: max-content;
+  gap: 3rem;
+  animation: saltini-marquee 60s linear infinite;
+}
+
+.marquee:hover .marquee__track {
+  animation-play-state: paused;
+}
+
+.marquee__fade {
+  position: absolute;
+  inset-block: 0;
+  width: 5rem;
+  pointer-events: none;
+}
+
+.marquee__fade--start {
+  inset-inline-start: 0;
+  background: linear-gradient(to right, var(--bs-body-bg), transparent);
+}
+
+.marquee__fade--end {
+  inset-inline-end: 0;
+  background: linear-gradient(to left, var(--bs-body-bg), transparent);
+}
+
+.brand-name {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  white-space: nowrap;
+  color: var(--saltini-tortora);
+  transition: color 0.3s ease;
+}
+
+.brand-name:hover {
+  color: var(--saltini-gold);
+}
+
+@media (min-width: 576px) {
+  .brand-name {
+    font-size: 1.85rem;
+  }
+}
+
+@keyframes saltini-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* ── 10. Servizi ──────────────────────────────────────────────────── */
+.service-grid {
+  display: grid;
+  gap: 1px; /* la griglia lascia trasparire il colore-linea come bordo interno */
+  background: var(--saltini-line);
+  border: 1px solid var(--saltini-line);
+}
+
+@media (min-width: 576px) {
+  .service-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 992px) {
+  .service-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.service-card {
+  background: var(--saltini-paper);
+  padding: 2.25rem;
+  transition: background-color 0.3s ease;
+}
+
+.service-card:hover {
+  background: var(--saltini-sand);
+}
+
+/* ── 11. Recensioni ───────────────────────────────────────────────── */
+.score {
+  font-family: var(--font-display);
+  font-size: 4.5rem;
+  line-height: 0.9;
+}
+
+@media (min-width: 576px) {
+  .score {
+    font-size: 6rem;
+  }
+}
+
+.review-quote {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-style: italic;
+  line-height: 1.55;
+}
+
+/* ── 12. Form e mappa ─────────────────────────────────────────────── */
+.field-label {
+  display: block;
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--saltini-tortora);
+  margin-bottom: 0.5rem;
+}
+
+.map-frame {
+  border: 1px solid var(--saltini-line);
+  overflow: hidden;
+}
+
+.map-frame iframe {
+  display: block;
+  width: 100%;
+  height: 380px;
+  border: 0;
+  filter: grayscale(35%);
+}
+
+/* Segnaposto della mappa prima del click-to-load (GDPR) */
+.map-placeholder {
+  height: 380px;
+  background: var(--saltini-paper);
+}
+
+/* Link "salta al contenuto": visibile solo quando riceve il focus da tastiera */
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 1rem;
+  z-index: 2000;
+  background: var(--saltini-ink);
+  color: var(--saltini-ivory);
+  padding: 0.75rem 1.25rem;
+  font-size: 0.8rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.skip-link:focus {
+  top: 1rem;
+}
+
+/* ── 13. Footer ───────────────────────────────────────────────────── */
+.site-footer {
+  background-color: var(--saltini-ink);
+  color: var(--saltini-ivory);
+  padding-block: 5rem 2rem;
+}
+
+.site-footer a {
+  color: rgba(247, 243, 236, 0.65);
+  transition: color 0.3s ease;
+}
+
+.site-footer a:hover {
+  color: var(--saltini-gold);
+}
+
+.social-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border: 1px solid rgba(247, 243, 236, 0.2);
+  color: rgba(247, 243, 236, 0.8);
+  transition:
+    border-color 0.3s ease,
+    color 0.3s ease;
+}
+
+.social-btn:hover {
+  border-color: var(--saltini-gold);
+  color: var(--saltini-gold);
+}
+
+/* ── 14. Shop e pagine interne ────────────────────────────────────── */
+.subpage {
+  /* Il padding-top compensa l'header fisso, sempre pieno fuori dalla home */
+  padding-block: 8.5rem 5rem;
+  min-height: 70vh;
+}
+
+.product-card {
+  display: block;
+  color: inherit;
+  border: 1px solid var(--saltini-line);
+  background: var(--saltini-paper);
+  transition: border-color 0.3s ease;
+}
+
+.product-card:hover,
+.product-card:focus-visible {
+  color: inherit;
+  border-color: var(--saltini-gold);
+}
+
+.product-card__media {
+  display: block;
+  aspect-ratio: 1;
+  overflow: hidden;
+}
+
+.product-card__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.product-card:hover .product-card__media img {
+  transform: scale(1.06);
+}
+
+.price {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  line-height: 1.1;
+}
+
+/* Filtri del catalogo: bottone attivo evidenziato in oro */
+.btn-filter {
+  padding: 0.7rem 1.4rem;
+  font-size: 0.7rem;
+}
+
+.btn-outline-line.is-active {
+  border-color: var(--saltini-gold);
+  color: var(--saltini-gold);
+}
+
+/* Selettore di quantità nel carrello */
+.qty-stepper {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid var(--saltini-line);
+  background: #fff;
+}
+
+.qty-btn {
+  background: none;
+  border: 0;
+  padding: 0.35rem 0.8rem;
+  line-height: 1;
+  color: inherit;
+}
+
+.qty-btn:hover {
+  color: var(--saltini-gold);
+}
+
+.qty-value {
+  min-width: 2rem;
+  text-align: center;
+  font-size: 0.85rem;
+}
+
+.cart-thumb {
+  width: 4.5rem;
+  aspect-ratio: 1;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+/* Icona carrello nell'header, con contatore */
+.cart-link {
+  position: relative;
+  display: inline-flex;
+}
+
+.cart-count {
+  position: absolute;
+  top: -0.5rem;
+  right: -0.65rem;
+  min-width: 1.05rem;
+  height: 1.05rem;
+  padding-inline: 0.15rem;
+  border-radius: 50%;
+  background: var(--saltini-gold);
+  color: var(--saltini-ink);
+  font-size: 0.62rem;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Metodi di pagamento nel checkout: il selezionato si bordera d'oro */
+.payment-option {
+  cursor: pointer;
+  transition: border-color 0.3s ease;
+}
+
+/* :has è supportato da tutti i browser attuali (2023+) */
+.payment-option:has(.form-check-input:checked) {
+  border-color: var(--saltini-gold);
+}
+
+/* ── 15. Rivelazione allo scroll ──────────────────────────────────── */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity 700ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* Rispetto della preferenza utente: niente animazioni */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .marquee__track {
+    animation: none;
+  }
+
+  .collection-card__img,
+  .zoom-frame img,
+  .product-card__media img {
+    transition: none;
+  }
+}
