@@ -33,9 +33,9 @@ jobs:
       - run: npm run build
         env:
           VITE_BASE: /${{ github.event.repository.name }}/
+      # Pages è già abilitato sul repo (build_type: workflow); l'auto-abilitazione
+      # (enablement: true) è stata tolta perché soffre di un bug su Node 24.
       - uses: actions/configure-pages@v5
-        with:
-          enablement: true
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist
