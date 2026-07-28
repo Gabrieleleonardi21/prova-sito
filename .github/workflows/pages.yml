@@ -1,4 +1,7 @@
-# Deploy su GitHub Pages a ogni push su main.
+# Deploy su GitHub Pages a ogni push su main — MA solo se lint, build e
+# test end-to-end passano: un commit che rompe il checkout non va online.
+# (La CI separata copre branch e pull request; qui su main si valida tutto
+# prima di pubblicare, senza doppioni.)
 #
 # Il sito viene servito da https://<utente>.github.io/<repo>/ : per questo la
 # build riceve VITE_BASE=/<repo>/ (percorsi di asset, router e link assoluti).
@@ -30,6 +33,9 @@ jobs:
           node-version: 24
           cache: npm
       - run: npm ci
+      - run: npm run lint
+      # I test usano il Chrome preinstallato sul runner (channel "chrome")
+      - run: npm run test:e2e
       - run: npm run build
         env:
           VITE_BASE: /${{ github.event.repository.name }}/

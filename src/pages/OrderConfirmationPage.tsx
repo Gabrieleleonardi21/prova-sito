@@ -7,6 +7,7 @@ import { usePageTitle } from "@/lib/use-page-title";
 
 // Stato passato dalla cassa dopo l'invio dell'ordine via email.
 type ConfirmationState = {
+  riferimento: string;
   metodo: PaymentMethodId;
   totale: string;
   nome: string;
@@ -66,6 +67,12 @@ export function OrderConfirmationPage() {
           {state && method && (
             <div className="text-start mt-4 pt-4 border-top">
               <dl className="d-flex justify-content-between mb-0">
+                <dt className="fw-normal text-soft small">Riferimento</dt>
+                <dd className="small fw-medium mb-0" style={{ letterSpacing: "0.08em" }}>
+                  {state.riferimento}
+                </dd>
+              </dl>
+              <dl className="d-flex justify-content-between mt-2 mb-0">
                 <dt className="fw-normal text-soft small">Totale dell'ordine</dt>
                 <dd className="price mb-0">{state.totale}</dd>
               </dl>

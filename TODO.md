@@ -52,7 +52,18 @@
 - [ ] Verificare se conviene migrare tutto il catalogo o partire da un
       sottoinsieme (es. sola linea artigianale Saltini)
 
-## 4. TODO preesistenti, indipendenti da Firebase
+## 4. Attivazioni rapide già predisposte (basta una variabile in `.env`)
+
+- [ ] **Statistiche senza cookie**: account su https://plausible.io e
+      `VITE_PLAUSIBLE_DOMAIN=<dominio>` — dati aggregati, niente banner
+- [ ] **Monitoraggio errori**: terzo form Formspree dedicato e
+      `VITE_ERROR_ENDPOINT=<url>` — email alla boutique al primo errore JS
+      (in futuro sostituibile con Sentry cambiando solo `report-error.ts`)
+- [ ] **Palette e contrasto**: l'oro (#c6a15b) su avorio non raggiunge il
+      contrasto WCAG AA; la regola è disattivata nei test di accessibilità —
+      decidere col titolare se scurire l'oro dei testi (es. #a8874a)
+
+## 5. TODO preesistenti, indipendenti da Firebase
 
 - [ ] Foto reali al posto dei placeholder Unsplash (risolvibile col pannello
       admin di §2, oppure subito a mano in `shop-content.ts`/`site-content.ts`)

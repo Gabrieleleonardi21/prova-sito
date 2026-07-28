@@ -14,7 +14,7 @@
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { PRODUCTS, isAvailable } from "../src/lib/shop-content.ts";
+import { CATEGORIES, PRODUCTS, isAvailable } from "../src/lib/shop-content.ts";
 import { LEGAL_DOCS } from "../src/lib/legal-content.ts";
 
 // Dominio pubblico del sito: da aggiornare se cambia.
@@ -76,6 +76,32 @@ function schemaAvailability(product) {
   return "https://schema.org/LimitedAvailability";
 }
 
+// Briciole di pane strutturate (Home → Shop → Categoria → Prodotto):
+// Google le mostra nei risultati al posto dell'URL grezzo.
+function breadcrumbLd(product) {
+  const category = CATEGORIES.find((c) => c.id === product.category);
+  let categoryLabel = "Catalogo";
+  if (category) {
+    categoryLabel = category.label;
+  }
+  const items = [
+    { name: "Home", url: `${SITE_URL}/` },
+    { name: "Shop", url: `${SITE_URL}/shop` },
+    { name: categoryLabel, url: `${SITE_URL}/shop?categoria=${product.category}` },
+    { name: product.name, url: `${SITE_URL}/shop/${product.slug}` },
+  ];
+  return {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: items.map((item, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      name: item.name,
+      item: item.url,
+    })),
+  };
+}
+
 const template = await readFile(path.join(DIST, "index.html"), "utf8");
 
 const pages = [
@@ -104,22 +130,26 @@ const pages = [
     title: `${product.name} — Gioielleria Saltini`,
     description: product.description,
     image: product.image,
-    jsonLd: {
-      "@context": "https://schema.org",
-      "@type": "Product",
-      name: product.name,
-      description: product.description,
-      image: product.image,
-      brand: { "@type": "Brand", name: product.brand },
-      offers: {
-        "@type": "Offer",
-        url: `${SITE_URL}/shop/${product.slug}`,
-        priceCurrency: "EUR",
-        price: String(product.price),
-        availability: schemaAvailability(product),
-        itemCondition: "https://schema.org/NewCondition",
+    // Un array di oggetti JSON-LD è valido: Product + briciole di pane
+    jsonLd: [
+      {
+        "@context": "https://schema.org",
+        "@type": "Product",
+        name: product.name,
+        description: product.description,
+        image: product.image,
+        brand: { "@type": "Brand", name: product.brand },
+        offers: {
+          "@type": "Offer",
+          url: `${SITE_URL}/shop/${product.slug}`,
+          priceCurrency: "EUR",
+          price: String(product.price),
+          availability: schemaAvailability(product),
+          itemCondition: "https://schema.org/NewCondition",
+        },
       },
-    },
+      breadcrumbLd(product),
+    ],
   })),
 ];
 

@@ -1,5 +1,6 @@
 import { Component, type ReactNode } from "react";
 import { withBase } from "@/lib/base";
+import { reportError } from "@/lib/report-error";
 
 type Props = { children: ReactNode };
 type State = { error: Error | null };
@@ -18,6 +19,8 @@ export class ErrorBoundary extends Component<Props, State> {
 
   componentDidCatch(error: Error) {
     console.error("[errore pagina]", error);
+    // Segnala alla boutique (solo se VITE_ERROR_ENDPOINT è configurato)
+    reportError(error.message, error.stack);
   }
 
   render() {

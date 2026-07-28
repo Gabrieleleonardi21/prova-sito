@@ -14,6 +14,8 @@
 import type { PaymentMethodId } from "./shop-content";
 
 export type OrderPayload = {
+  /** Riferimento leggibile dell'ordine (es. "SLT-260728-K4TQ"). */
+  riferimento: string;
   nome: string;
   email: string;
   telefono: string;
@@ -51,7 +53,7 @@ export async function sendOrder(payload: OrderPayload): Promise<void> {
     body: JSON.stringify({
       ...payload,
       // "_subject" è il campo standard Formspree per l'oggetto dell'email
-      _subject: `Nuovo ordine dal sito — ${payload.totale} (${payload.metodo})`,
+      _subject: `Ordine ${payload.riferimento} — ${payload.totale} (${payload.metodo})`,
     }),
   });
 

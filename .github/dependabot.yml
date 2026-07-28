@@ -1,0 +1,21 @@
+# Aggiornamento automatico delle dipendenze: Dependabot apre le PR e la CI
+# le valida coi test — si fa merge solo se è tutto verde.
+version: 2
+updates:
+  # Pacchetti npm: aggiornamenti minor/patch raggruppati in una sola PR
+  # settimanale per ridurre il rumore; i major restano PR separate.
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+    groups:
+      minor-e-patch:
+        update-types:
+          - minor
+          - patch
+
+  # Le action dei workflow (checkout, setup-node, deploy-pages…)
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly

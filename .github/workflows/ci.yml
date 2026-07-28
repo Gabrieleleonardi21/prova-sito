@@ -1,9 +1,13 @@
-# CI: a ogni push o pull request esegue lint, build (con generazione SEO)
-# e i test end-to-end del flusso di acquisto.
+# CI su branch di lavoro e pull request: lint, build (con generazione SEO)
+# e test end-to-end del flusso di acquisto.
+# Su main la stessa validazione avviene dentro il workflow di deploy
+# (pages.yml), che pubblica solo se tutto è verde: qui main è escluso
+# per non eseguire i controlli due volte.
 name: CI
 
 on:
   push:
+    branches-ignore: [main]
   pull_request:
 
 jobs:

@@ -17,6 +17,12 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./styles.css";
 
 import { App } from "./App";
+import { initAnalytics } from "./lib/analytics";
+import { initErrorReporting } from "./lib/report-error";
+
+// Statistiche cookieless e monitoraggio errori: attivi solo se configurati in .env
+initAnalytics();
+initErrorReporting();
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>

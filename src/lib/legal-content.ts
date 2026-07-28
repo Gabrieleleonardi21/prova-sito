@@ -117,6 +117,7 @@ export const LEGAL_DOCS: LegalDoc[] = [
           "Form di contatto: nome, email, telefono e contenuto del messaggio, trattati al solo scopo di rispondere alla richiesta (base giuridica: misure precontrattuali su richiesta dell'interessato).",
           "Ordini dello shop: dati identificativi, di contatto e di spedizione, trattati per gestire l'ordine, il pagamento e la consegna (base giuridica: esecuzione del contratto) e per gli adempimenti fiscali (base giuridica: obbligo legale).",
           "Non utilizziamo i dati per marketing senza un consenso esplicito e separato, e non li cediamo a terzi al di fuori dei fornitori necessari all'esecuzione dell'ordine (corriere, fornitore dei servizi di pagamento, piattaforma di inoltro email).",
+          "In caso di malfunzionamento tecnico del sito possono essere raccolti dati tecnici della sessione (pagina visitata, tipo di browser, messaggio d'errore) al solo scopo di correggere il problema (base giuridica: legittimo interesse).",
         ],
       },
       {
@@ -142,8 +143,9 @@ export const LEGAL_DOCS: LegalDoc[] = [
       {
         heading: "Cookie utilizzati da questo sito",
         paragraphs: [
-          "Questo sito non utilizza cookie di profilazione né strumenti di analisi di terze parti.",
+          "Questo sito non utilizza cookie di profilazione.",
           "Per il funzionamento del carrello viene usata la memoria locale del browser (localStorage): contiene solo gli articoli selezionati, resta sul tuo dispositivo e non viene trasmessa a nessuno.",
+          "Le eventuali statistiche di traffico sono raccolte in forma aggregata e anonima, senza cookie e senza identificare i visitatori.",
         ],
       },
       {

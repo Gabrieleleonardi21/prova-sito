@@ -12,6 +12,7 @@ import {
 import { useCart } from "@/lib/cart";
 import { startStripeCheckout, stripeCheckoutActive } from "@/lib/checkout-stripe";
 import { formatEuro } from "@/lib/format";
+import { makeOrderRef } from "@/lib/order-ref";
 import { sendOrder } from "@/lib/send-order";
 import { usePageTitle } from "@/lib/use-page-title";
 import {
@@ -133,6 +134,8 @@ export function CheckoutPage() {
 
     try {
       const valid = result.data;
+      // Riferimento citabile da boutique e cliente (email, telefono, Stripe)
+      const riferimento = makeOrderRef();
 
       // Con Stripe attivo, il metodo "carta" paga subito sulla pagina
       // sicura di Stripe: niente ordine via email, il carrello si svuota
@@ -142,6 +145,7 @@ export function CheckoutPage() {
           items,
           email: valid.email,
           cliente: {
+            riferimento,
             nome: valid.nome,
             telefono: valid.telefono,
             indirizzo: `${valid.indirizzo}, ${valid.cap} ${valid.citta} (${valid.provincia.toUpperCase()})`,
@@ -152,6 +156,7 @@ export function CheckoutPage() {
       }
 
       await sendOrder({
+        riferimento,
         nome: valid.nome,
         email: valid.email,
         telefono: valid.telefono,
@@ -167,7 +172,13 @@ export function CheckoutPage() {
       setCompleted(true);
       clear();
       navigate("/ordine-confermato", {
-        state: { metodo, totale: formatEuro(total), nome: valid.nome, email: valid.email },
+        state: {
+          riferimento,
+          metodo,
+          totale: formatEuro(total),
+          nome: valid.nome,
+          email: valid.email,
+        },
       });
     } catch (error) {
       console.error("[ordini] invio fallito", error);
