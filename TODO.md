@@ -46,9 +46,16 @@
 
 ## 3. Decisioni da prendere insieme
 
-- [ ] **Hosting**: le Cloud Functions non girano su GitHub Pages → passare a
-      Firebase Hosting (tutto su un fornitore) oppure Vercel; al cambio,
-      togliere `VITE_BASE` da `.github/workflows/pages.yml`
+- [x] **Hosting**: deciso — **Vercel** con repo privato (GitHub Pages non
+      supporta i repo privati sul piano gratuito; Vercel in più esegue le
+      function `api/`, quindi Stripe funzionerà senza altri cambi)
+- [ ] **Collegare il repo a Vercel** (serve l'account del titolare/sviluppatore):
+      su https://vercel.com/new importare `Gabrieleleonardi21/prova-sito`,
+      framework Vite rilevato da solo, nessuna configurazione da cambiare
+      (c'è già `vercel.json`). Da lì ogni push su main va online da solo.
+- [ ] Quando arriva la chiave Stripe: impostare `STRIPE_SECRET_KEY` nelle
+      Environment Variables del progetto Vercel e
+      `VITE_STRIPE_CHECKOUT_ENDPOINT=/api/create-checkout-session`
 - [ ] Verificare se conviene migrare tutto il catalogo o partire da un
       sottoinsieme (es. sola linea artigianale Saltini)
 

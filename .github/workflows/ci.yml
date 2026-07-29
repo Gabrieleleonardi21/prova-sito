@@ -1,13 +1,14 @@
-# CI su branch di lavoro e pull request: lint, build (con generazione SEO)
-# e test end-to-end del flusso di acquisto.
-# Su main la stessa validazione avviene dentro il workflow di deploy
-# (pages.yml), che pubblica solo se tutto è verde: qui main è escluso
-# per non eseguire i controlli due volte.
+# CI su ogni push e pull request: lint, build (con generazione SEO) e test
+# end-to-end (flussi di acquisto + scansioni accessibilità axe).
+#
+# Nota deploy: l'hosting è Vercel via integrazione Git (il repo è privato,
+# GitHub Pages non era più utilizzabile). Vercel builda a ogni push su main
+# in modo indipendente da questa CI: la build include il type-check (tsc),
+# ma i test girano solo qui — un rosso su main va guardato subito.
 name: CI
 
 on:
   push:
-    branches-ignore: [main]
   pull_request:
 
 jobs:
