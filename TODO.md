@@ -49,10 +49,10 @@
 - [x] **Hosting**: deciso — **Vercel** con repo privato (GitHub Pages non
       supporta i repo privati sul piano gratuito; Vercel in più esegue le
       function `api/`, quindi Stripe funzionerà senza altri cambi)
-- [ ] **Collegare il repo a Vercel** (serve l'account del titolare/sviluppatore):
-      su https://vercel.com/new importare `Gabrieleleonardi21/prova-sito`,
-      framework Vite rilevato da solo, nessuna configurazione da cambiare
-      (c'è già `vercel.json`). Da lì ogni push su main va online da solo.
+- [x] **Collegare il repo a Vercel** — fatto: produzione su
+      https://prova-sito-five.vercel.app (il dominio prova-sito.vercel.app è
+      occupato da un altro progetto Vercel dello stesso account). Ogni push su
+      main va online da solo; function `api/` attive e verificate.
 - [ ] Quando arriva la chiave Stripe: impostare `STRIPE_SECRET_KEY` nelle
       Environment Variables del progetto Vercel e
       `VITE_STRIPE_CHECKOUT_ENDPOINT=/api/create-checkout-session`
