@@ -5,6 +5,7 @@
     "module": "ESNext",
     "moduleResolution": "bundler",
     "moduleDetection": "force",
+    "allowImportingTsExtensions": true,
     "verbatimModuleSyntax": true,
     "jsx": "react-jsx",
     "strict": true,
@@ -14,9 +15,8 @@
     "noEmit": true,
     "skipLibCheck": true,
     "types": ["vite/client", "node"],
-    "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["./src/*"]
     }
   },
   "include": ["src", "api", "vite.config.ts", "eslint.config.js", "playwright.config.ts"]

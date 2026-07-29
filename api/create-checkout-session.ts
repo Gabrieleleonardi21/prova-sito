@@ -12,7 +12,11 @@
  */
 
 import Stripe from "stripe";
-import { PRODUCTS, isAvailable } from "../src/lib/shop-content";
+// Estensione .js esplicita (convenzione TypeScript per l'ESM): a runtime la
+// function è un modulo ESM e gli import relativi senza estensione falliscono
+// con ERR_MODULE_NOT_FOUND; il builder di Vercel compila shop-content.ts in
+// shop-content.js dentro il bundle, e questo specificatore vi corrisponde.
+import { PRODUCTS, isAvailable } from "../src/lib/shop-content.js";
 
 // Firme minime di request/response in stile Vercel Node, per non
 // dipendere dai tipi @vercel/node.
