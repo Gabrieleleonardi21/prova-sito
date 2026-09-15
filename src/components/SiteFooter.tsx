@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Facebook, Instagram } from "lucide-react";
+import { FacebookIcon, InstagramIcon } from "@/components/social-icons";
 import { BUSINESS, STORES } from "@/lib/site-content";
 import { withBase } from "@/lib/base";
 
@@ -60,7 +60,7 @@ export function SiteFooter() {
                 aria-label="Facebook di Gioielleria Saltini"
                 className="social-btn"
               >
-                <Facebook size={16} aria-hidden="true" />
+                <FacebookIcon />
               </a>
               <a
                 href={BUSINESS.instagram}
@@ -69,7 +69,7 @@ export function SiteFooter() {
                 aria-label="Instagram di Gioielleria Saltini"
                 className="social-btn"
               >
-                <Instagram size={16} aria-hidden="true" />
+                <InstagramIcon />
               </a>
             </div>
           </div>

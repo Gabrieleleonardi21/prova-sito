@@ -13,6 +13,13 @@ updates:
         update-types:
           - minor
           - patch
+    ignore:
+      # TypeScript 7 (compilatore nativo) non è ancora supportato da
+      # typescript-eslint: npm ci si blocca sul conflitto di peer dependency.
+      # Togliere questa riga quando typescript-eslint dichiara il supporto.
+      - dependency-name: typescript
+        update-types:
+          - version-update:semver-major
 
   # Le action dei workflow (checkout, setup-node, deploy-pages…)
   - package-ecosystem: github-actions
