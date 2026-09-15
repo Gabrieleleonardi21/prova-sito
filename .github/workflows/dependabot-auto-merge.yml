@@ -1,0 +1,45 @@
+# Auto-merge delle PR di Dependabot: gli aggiornamenti minor e patch entrano
+# da soli quando la CI è verde, così le patch di sicurezza non restano ferme.
+# I major (quelli che possono rompere la build, es. lucide-react 1.x) restano
+# sempre in attesa di approvazione manuale.
+#
+# Perché i controlli si aspettano qui invece di usare l'auto-merge nativo:
+# quello di GitHub fonde quando passano i "controlli richiesti", che si
+# impostano solo con la protezione del branch — non disponibile sui repository
+# privati del piano gratuito. Questo workflow attende i controlli da sé e
+# fonde solo se sono tutti verdi.
+name: Dependabot auto-merge
+
+on: pull_request_target
+
+# Permessi minimi per leggere la PR e chiuderla.
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  auto-merge:
+    # Solo le PR aperte dal bot, mai quelle di una persona.
+    if: github.actor == 'dependabot[bot]'
+    runs-on: ubuntu-latest
+    # Rete di sicurezza: se la CI si blocca, il job non resta appeso a
+    # consumare minuti di Actions.
+    timeout-minutes: 30
+    steps:
+      # Legge dalla PR il tipo di aggiornamento (major/minor/patch).
+      # pull_request_target non fa checkout del codice della PR: il contenuto
+      # non fidato non viene mai eseguito.
+      - id: meta
+        uses: dependabot/fetch-metadata@v2
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - if: steps.meta.outputs.update-type != 'version-update:semver-major'
+        env:
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # --fail-fast esce con errore al primo controllo rosso: in quel caso
+          # la PR resta aperta e il rosso qui segnala che va guardata.
+          gh pr checks "$PR_URL" --watch --fail-fast --interval 30
+          gh pr merge "$PR_URL" --squash --delete-branch
